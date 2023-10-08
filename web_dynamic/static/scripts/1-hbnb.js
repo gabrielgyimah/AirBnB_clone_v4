@@ -1,13 +1,20 @@
-$(document).ready(function () {
-	let amenities = {};
+$(function () {
+  const addOrRemoveId = () => {
+    const ids = [];
+    const isChecked = $('input:checked');
+    let str = '';
+    let i = 0;
+    for (const ele of isChecked) {
+      ids.push($(ele).attr('data-id'));
+      if (i !== 0) {
+        str += ', ';
+      }
+      str += $(ele).attr('data-name');
+      i++;
+    }
+    $('.amenities > h4').text(str);
+    return ids;
+  };
 
-	const amenity_checkers = $('li input[type=checkbox]')
-	amenity_checkers.on('change', function () {
-		if (this.checked) {
-			amenities[$(this).attr("data-name")] = $(this).attr("data-id");
-		} else {
-			delete amenities[$(this).attr("data-name")];
-		}
-		$(".amenities h4").text(Object.keys(amenities).sort().join(", "));
-	})
-})
+  $('input[type=checkbox]').on('click', addOrRemoveId);
+});
